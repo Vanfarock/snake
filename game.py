@@ -26,11 +26,12 @@ class Game:
         self.end_game = False
         self.win = False
         self.max_apples = 3
+        self.board_size = 10
         self.apples = []
         self.ticks = 0
         self.action = None
         self.last_action = None
-        self.cell_size = self.height / 10
+        self.cell_size = self.height / self.board_size
         self.snake = Snake(self.cell_size, 0, 0)
         self.snake_move_delay = 200
         self.generate_apples()
