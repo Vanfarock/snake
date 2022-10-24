@@ -25,15 +25,15 @@ class Game:
     def reset(self):
         self.end_game = False
         self.win = False
-        self.max_apples = 3
-        self.board_size = 10
+        self.max_apples = 1
+        self.board_size = 20
         self.apples = []
         self.ticks = 0
         self.action = None
         self.last_action = None
         self.cell_size = self.height / self.board_size
         self.snake = Snake(self.cell_size, 0, 0)
-        self.snake_move_delay = 200
+        self.snake_move_delay = 100
         self.generate_apples()
 
     def run(self):
@@ -142,14 +142,21 @@ class Game:
         self.draw_board_lines()
 
     def draw_result(self):
-        font = pygame.font.SysFont('Comic Sans MS', 50)
+        message_font = pygame.font.SysFont('Comic Sans MS', 50)
         message = 'You lost'
         if self.win:
             message = 'You win'
-        surface = font.render(message, False, Colors.WHITE)
+        message_surface = message_font.render(message, True, Colors.WHITE)
         
-        x, y = self.width / 2 - surface.get_width() / 2, self.height / 2 - surface.get_height() / 2
-        self.screen.blit(surface, (x, y))
+        message_x = self.width / 2 - message_surface.get_width() / 2
+        message_y = self.height / 2 - message_surface.get_height() / 2
+        self.screen.blit(message_surface, (message_x, message_y))
+
+        tip_font = pygame.font.SysFont('Comic Sans MS', 20)
+        tip_surface = tip_font.render("(Press enter to restart)", True, Colors.WHITE)
+        tip_x = self.width / 2 - tip_surface.get_width() / 2
+        tip_y = message_y + message_surface.get_height()
+        self.screen.blit(tip_surface, (tip_x, tip_y))
 
     def draw_board_lines(self):
         horizontal_cells = round(self.width / self.cell_size)
